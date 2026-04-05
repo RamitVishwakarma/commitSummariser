@@ -25,35 +25,37 @@ const NAV_ITEMS = [
   { to: "/settings", icon: Settings, label: "Settings" },
 ];
 
-export function Sidebar() {
+export function Sidebar(): React.JSX.Element {
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
 
   return (
     <aside
-      className="h-screen sticky top-0 flex flex-col transition-all duration-250 ease-in-out z-20 backdrop-blur-md border-r border-[rgba(45,212,191,0.08)] bg-[rgba(10,18,20,0.6)]"
-      style={{ width: collapsed ? 64 : 240 }}
+      className={cn(
+        "sticky top-0 z-20 flex h-screen flex-col border-r border-[rgba(45,212,191,0.08)] bg-[rgba(10,18,20,0.6)] backdrop-blur-md transition-all duration-250 ease-in-out",
+        collapsed ? "w-16" : "w-60",
+      )}
     >
-      <div className="flex items-center gap-2 p-4 h-16">
-        <Activity size={24} className="text-(--accent-violet)" />
+      <div className="flex h-16 items-center gap-2 p-4">
+        <Activity size={24} className="text-accent-violet" />
         {!collapsed && (
-          <span className="text-[18px] font-semibold text-(--text-primary)">GitPulse</span>
+          <span className="text-text-primary text-[18px] font-semibold">GitPulse</span>
         )}
       </div>
 
-      <nav className="flex-1 flex flex-col gap-1 px-2 mt-2">
-        {NAV_ITEMS.map((item) => {
+      <nav className="mt-2 flex flex-1 flex-col gap-1 px-2">
+        {NAV_ITEMS.map(item => {
           const active = pathname?.startsWith(item.to) ?? false;
           return (
             <Link
               key={item.to}
               href={item.to}
               className={cn(
-                "flex items-center gap-3 rounded-[10px] transition-all duration-150 relative py-2.5 border-l-[3px]",
-                collapsed ? "px-0 justify-center" : "px-3 justify-start",
+                "relative flex items-center gap-3 rounded-[10px] border-l-[3px] py-2.5 transition-all duration-150",
+                collapsed ? "justify-center px-0" : "justify-start px-3",
                 active
-                  ? "bg-(--bg-elevated) text-(--accent-violet) border-l-(--accent-violet)"
-                  : "bg-transparent text-(--text-secondary) border-l-transparent",
+                  ? "text-accent-violet border-l-accent-violet bg-bg-elevated"
+                  : "text-text-secondary border-l-transparent bg-transparent",
               )}
             >
               <item.icon size={20} />
@@ -63,18 +65,16 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="p-3 flex items-center gap-2 border-t border-[rgba(255,255,255,0.08)]">
-        <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold text-[#0a1214] bg-[linear-gradient(135deg,#1a8a7d,#2DD4BF)]">
+      <div className="flex items-center gap-2 border-t border-[rgba(255,255,255,0.08)] p-3">
+        <div className="flex size-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#1a8a7d,#2DD4BF)] text-xs font-semibold text-[#0a1214]">
           R
         </div>
-        {!collapsed && (
-          <span className="text-[13px] text-(--text-secondary)">Ramit</span>
-        )}
+        {!collapsed && <span className="text-text-secondary text-[13px]">Ramit</span>}
       </div>
 
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute -right-3 top-20 w-6 h-6 rounded-full flex items-center justify-center bg-(--bg-elevated) border border-(--border-glass) text-(--text-secondary)"
+        className="text-text-secondary border-border-glass bg-bg-elevated absolute top-20 -right-3 flex size-6 items-center justify-center rounded-full border"
       >
         {collapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
       </button>

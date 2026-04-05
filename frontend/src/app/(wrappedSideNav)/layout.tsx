@@ -6,9 +6,11 @@ interface WrappedSideNavLayoutProps {
   children: ReactNode;
 }
 
-export default function WrappedSideNavLayout({ children }: WrappedSideNavLayoutProps) {
+export default function WrappedSideNavLayout({
+  children,
+}: WrappedSideNavLayoutProps): React.JSX.Element {
   return (
-    <div className="flex min-h-screen relative">
+    <div className="relative flex min-h-screen">
       <Background />
       <div className="relative z-10 flex w-full">
         <Sidebar />

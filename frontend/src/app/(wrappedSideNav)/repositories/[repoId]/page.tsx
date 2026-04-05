@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import { TopBar } from "@/components/layout/top-bar";
 import { repos, allCommits } from "@/lib/mock";
 import { ExternalLink, RefreshCw, Eye, Flag, Trash2, Circle } from "lucide-react";
@@ -17,50 +16,70 @@ const chartData = [
   { day: "Sun", commits: 4 },
 ];
 
-export default function RepoDetailPage() {
+interface CommitTooltipPayloadEntry {
+  value?: number | string;
+}
+
+interface CommitTooltipProps {
+  active?: boolean;
+  label?: string;
+  payload?: CommitTooltipPayloadEntry[];
+}
+
+function CommitTooltip({ active, label, payload }: CommitTooltipProps): React.JSX.Element | null {
+  if (!active || !payload || payload.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="text-text-primary rounded-lg border border-[rgba(45,212,191,0.15)] bg-[rgba(10,18,20,0.95)] px-3 py-2 text-[12px]">
+      <div className="text-text-secondary">{label}</div>
+      <div className="font-semibold">{payload[0]?.value} commits</div>
+    </div>
+  );
+}
+
+export default function RepoDetailPage(): React.JSX.Element | null {
   const params = useParams();
   const repoId = typeof params["repoId"] === "string" ? params["repoId"] : undefined;
 
-  const repo = repos.find((r) => r.id === repoId) ?? repos[0];
-  const commits = allCommits.filter((c) => c.repoId === repoId);
+  const repo = repos.find(r => r.id === repoId) ?? repos[0];
+  const commits = allCommits.filter(c => c.repoId === repoId);
 
   if (!repo) return null;
 
   return (
-    <div className="flex-1 min-h-screen overflow-y-auto">
+    <div className="min-h-screen flex-1 overflow-y-auto">
       <TopBar title={repo.name} />
-      <div className="p-8 max-w-[1200px] mx-auto space-y-6">
+      <div className="mx-auto max-w-[1200px] space-y-6 p-8">
         {/* Header */}
         <div className="glass-card p-6">
-          <div className="flex items-start justify-between flex-wrap gap-4">
+          <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h2 style={{ fontSize: 24, fontWeight: 700 }}>{repo.name}</h2>
-              <p style={{ color: "var(--text-secondary)", fontSize: 14, marginTop: 4 }}>{repo.description}</p>
-              <div className="flex items-center gap-4 mt-3">
+              <h2 className="text-[24px] font-bold">{repo.name}</h2>
+              <p className="text-text-secondary mt-1 text-[14px]">{repo.description}</p>
+              <div className="mt-3 flex items-center gap-4">
                 <span className="pill">
-                  <Circle size={8} fill={repo.langColor} style={{ color: repo.langColor }} /> {repo.language}
+                  <Circle size={8} fill={repo.langColor} color={repo.langColor} /> {repo.language}
                 </span>
-                <span style={{ fontSize: 12, color: "var(--text-muted)" }}>{repo.commits} commits</span>
-                <span style={{ fontSize: 12, color: "var(--text-muted)" }}>Last: {repo.lastCommit}</span>
+                <span className="text-text-muted text-[12px]">{repo.commits} commits</span>
+                <span className="text-text-muted text-[12px]">Last: {repo.lastCommit}</span>
               </div>
             </div>
             <div className="flex gap-2">
-              <button
-                className="btn-secondary flex items-center gap-1"
-                style={{ fontSize: 12, padding: "6px 12px" }}
-              >
+              <button className="btn-secondary flex items-center gap-1 !px-3 !py-1.5 text-[12px]">
                 <RefreshCw size={12} /> Sync
               </button>
-              <a href="#" className="btn-ghost flex items-center gap-1" style={{ fontSize: 12 }}>
+              <a href="#" className="btn-ghost flex items-center gap-1 text-[12px]">
                 <ExternalLink size={12} /> GitHub
               </a>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Commits Table */}
-          <div className="lg:col-span-2 glass-card overflow-hidden">
+          <div className="glass-card overflow-hidden lg:col-span-2">
             <table className="glass-table w-full">
               <thead>
                 <tr>
@@ -71,24 +90,22 @@ export default function RepoDetailPage() {
                 </tr>
               </thead>
               <tbody>
-                {commits.map((c) => (
+                {commits.map(c => (
                   <tr key={c.id}>
                     <td>
-                      <span className="mono" style={{ fontSize: 12, color: "var(--accent-violet)" }}>
-                        {c.hash}
-                      </span>
+                      <span className="mono text-accent-violet text-[12px]">{c.hash}</span>
                     </td>
-                    <td style={{ fontSize: 13, color: "var(--text-secondary)" }}>{c.message}</td>
-                    <td style={{ fontSize: 12, color: "var(--text-muted)" }}>{c.time}</td>
+                    <td className="text-text-secondary text-[13px]">{c.message}</td>
+                    <td className="text-text-muted text-[12px]">{c.time}</td>
                     <td>
                       <div className="flex gap-1">
                         <button className="btn-ghost p-1">
                           <Eye size={14} />
                         </button>
-                        <button className="btn-ghost p-1" style={{ color: "var(--accent-amber)" }}>
+                        <button className="text-accent-amber btn-ghost p-1">
                           <Flag size={14} />
                         </button>
-                        <button className="btn-ghost p-1" style={{ color: "var(--accent-rose)" }}>
+                        <button className="text-accent-rose btn-ghost p-1">
                           <Trash2 size={14} />
                         </button>
                       </div>
@@ -97,7 +114,7 @@ export default function RepoDetailPage() {
                 ))}
                 {commits.length === 0 && (
                   <tr>
-                    <td colSpan={4} className="text-center py-8" style={{ color: "var(--text-muted)" }}>
+                    <td colSpan={4} className="text-text-muted py-8 text-center">
                       No commits found.
                     </td>
                   </tr>
@@ -108,7 +125,7 @@ export default function RepoDetailPage() {
 
           {/* Stats */}
           <div className="glass-card p-5">
-            <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Commit Activity</h3>
+            <h3 className="mb-4 text-[16px] font-semibold">Commit Activity</h3>
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={chartData}>
                 <XAxis
@@ -118,26 +135,18 @@ export default function RepoDetailPage() {
                   tickLine={false}
                 />
                 <YAxis tick={{ fill: "#9898B0", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip
-                  contentStyle={{
-                    background: "rgba(10,18,20,0.95)",
-                    border: "1px solid rgba(45,212,191,0.15)",
-                    borderRadius: 8,
-                    color: "#E0F2F1",
-                    fontSize: 12,
-                  }}
-                />
+                <Tooltip content={<CommitTooltip />} />
                 <Bar dataKey="commits" fill="#2DD4BF" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
             <div className="mt-4 space-y-2">
-              <div className="flex justify-between" style={{ fontSize: 12 }}>
-                <span style={{ color: "var(--text-secondary)" }}>Most active day</span>
-                <span style={{ fontWeight: 600 }}>Friday</span>
+              <div className="flex justify-between text-[12px]">
+                <span className="text-text-secondary">Most active day</span>
+                <span className="font-semibold">Friday</span>
               </div>
-              <div className="flex justify-between" style={{ fontSize: 12 }}>
-                <span style={{ color: "var(--text-secondary)" }}>Avg commits/week</span>
-                <span style={{ fontWeight: 600 }}>5.7</span>
+              <div className="flex justify-between text-[12px]">
+                <span className="text-text-secondary">Avg commits/week</span>
+                <span className="font-semibold">5.7</span>
               </div>
             </div>
           </div>

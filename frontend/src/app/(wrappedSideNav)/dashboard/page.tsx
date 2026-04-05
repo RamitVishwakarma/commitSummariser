@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { TopBar } from "@/components/layout/top-bar";
 import { todayCommits, weeklySummaries, monthlySummaries } from "@/lib/mock";
+import { cn } from "@/lib/utils";
 import { ArrowUpRight, ArrowDownRight, Sparkles, ChevronRight, Circle } from "lucide-react";
 
 const stats = [
@@ -10,13 +11,13 @@ const stats = [
   { label: "Last Sync", value: "2h ago", delta: "Auto-sync enabled", positive: true },
 ];
 
-const repoLangColors: Record<string, string> = {
-  gitpulse: "#3178C6",
-  "api-gateway": "#00ADD8",
-  "design-system": "#3178C6",
+const repoLangDotClasses: Record<string, string> = {
+  gitpulse: "bg-[#3178C6]",
+  "api-gateway": "bg-[#00ADD8]",
+  "design-system": "bg-[#3178C6]",
 };
 
-export default function DashboardPage() {
+export default function DashboardPage(): React.JSX.Element | null {
   const grouped = todayCommits.reduce(
     (acc, c) => {
       (acc[c.repo] ??= []).push(c);
@@ -31,21 +32,20 @@ export default function DashboardPage() {
   if (!latestWeekly || !latestMonthly) return null;
 
   return (
-    <div className="flex-1 min-h-screen overflow-y-auto">
+    <div className="min-h-screen flex-1 overflow-y-auto">
       <TopBar title="Dashboard" />
-      <div className="p-8 max-w-[1200px] mx-auto space-y-6">
+      <div className="mx-auto max-w-[1200px] space-y-6 p-8">
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((s, i) => (
-            <div key={i} className="glass-card p-5">
-              <div style={{ fontSize: 12, color: "var(--text-secondary)", marginBottom: 4 }}>{s.label}</div>
-              <div style={{ fontSize: 28, fontWeight: 600 }}>{s.value}</div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map(s => (
+            <div key={s.label} className="glass-card p-5">
+              <div className="text-text-secondary mb-1 text-[12px]">{s.label}</div>
+              <div className="text-[28px] font-semibold">{s.value}</div>
               <div
-                className="flex items-center gap-1 mt-1"
-                style={{
-                  fontSize: 12,
-                  color: s.positive ? "var(--accent-teal)" : "var(--accent-rose)",
-                }}
+                className={cn(
+                  "mt-1 flex items-center gap-1 text-[12px]",
+                  s.positive ? "text-accent-teal" : "text-accent-rose",
+                )}
               >
                 {s.positive ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
                 {s.delta}
@@ -56,37 +56,31 @@ export default function DashboardPage() {
 
         {/* Today's Commits */}
         <div className="glass-card p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <h2 style={{ fontSize: 18, fontWeight: 600 }}>Today&apos;s Commits</h2>
-            <Circle size={8} fill="#2DD4BF" style={{ color: "#2DD4BF" }} />
+          <div className="mb-4 flex items-center gap-2">
+            <h2 className="text-[18px] font-semibold">Today&apos;s Commits</h2>
+            <Circle size={8} fill="#2DD4BF" color="#2DD4BF" />
           </div>
           {Object.entries(grouped).map(([repo, commits]) => (
             <div key={repo} className="mb-4 last:mb-0">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="mb-2 flex items-center gap-2">
                 <span
-                  className="w-2 h-2 rounded-full"
-                  style={{ background: repoLangColors[repo] ?? "#8B5CF6" }}
+                  className={cn("size-2 rounded-full", repoLangDotClasses[repo] ?? "bg-[#8B5CF6]")}
                 />
                 <Link
                   href={`/repositories/${commits[0]?.repoId ?? ""}`}
-                  style={{ fontSize: 13, fontWeight: 600, color: "var(--accent-violet)" }}
+                  className="text-accent-violet text-[13px] font-semibold"
                 >
                   {repo}
                 </Link>
               </div>
-              {commits.map((c) => (
+              {commits.map(c => (
                 <div
                   key={c.id}
-                  className="flex items-center gap-4 py-2 px-3 rounded-lg transition-colors group"
-                  style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                  className="group flex items-center gap-4 rounded-lg border-b border-[rgba(255,255,255,0.04)] px-3 py-2 transition-colors"
                 >
-                  <span className="mono" style={{ fontSize: 12, color: "var(--accent-violet)" }}>
-                    {c.hash}
-                  </span>
-                  <span className="flex-1" style={{ fontSize: 13, color: "var(--text-secondary)" }}>
-                    {c.message}
-                  </span>
-                  <span style={{ fontSize: 11, color: "var(--text-muted)" }}>{c.time}</span>
+                  <span className="mono text-accent-violet text-[12px]">{c.hash}</span>
+                  <span className="text-text-secondary flex-1 text-[13px]">{c.message}</span>
+                  <span className="text-text-muted text-[11px]">{c.time}</span>
                 </div>
               ))}
             </div>
@@ -94,49 +88,40 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent Summaries */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="glass-card p-6">
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles size={16} style={{ color: "var(--accent-violet)" }} />
-              <h3 style={{ fontSize: 16, fontWeight: 600 }}>Latest Weekly Summary</h3>
+            <div className="mb-3 flex items-center gap-2">
+              <Sparkles size={16} className="text-accent-violet" />
+              <h3 className="text-[16px] font-semibold">Latest Weekly Summary</h3>
             </div>
-            <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 8 }}>
-              {latestWeekly.dateRange}
-            </div>
-            <ul className="space-y-1 mb-3">
-              {latestWeekly.accomplishments.slice(0, 3).map((a, i) => (
-                <li
-                  key={i}
-                  style={{ fontSize: 13, color: "var(--text-secondary)", paddingLeft: 12, position: "relative" }}
-                >
-                  <span style={{ position: "absolute", left: 0 }}>•</span>
+            <div className="text-text-muted mb-2 text-[12px]">{latestWeekly.dateRange}</div>
+            <ul className="mb-3 space-y-1">
+              {latestWeekly.accomplishments.slice(0, 3).map(a => (
+                <li key={a} className="text-text-secondary relative pl-3 text-[13px]">
+                  <span className="absolute left-0">•</span>
                   {a}
                 </li>
               ))}
             </ul>
             <Link
               href="/summaries"
-              className="inline-flex items-center gap-1"
-              style={{ fontSize: 13, color: "var(--accent-violet)" }}
+              className="text-accent-violet inline-flex items-center gap-1 text-[13px]"
             >
               Read More <ChevronRight size={14} />
             </Link>
           </div>
           <div className="glass-card p-6">
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles size={16} style={{ color: "var(--accent-teal)" }} />
-              <h3 style={{ fontSize: 16, fontWeight: 600 }}>Latest Monthly Summary</h3>
+            <div className="mb-3 flex items-center gap-2">
+              <Sparkles size={16} className="text-accent-teal" />
+              <h3 className="text-[16px] font-semibold">Latest Monthly Summary</h3>
             </div>
-            <div style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 8 }}>
-              {latestMonthly.month}
-            </div>
-            <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.6 }}>
+            <div className="text-text-muted mb-2 text-[12px]">{latestMonthly.month}</div>
+            <p className="text-text-secondary text-[13px] leading-[1.6]">
               {latestMonthly.overview.slice(0, 200)}...
             </p>
             <Link
               href="/summaries"
-              className="inline-flex items-center gap-1 mt-3"
-              style={{ fontSize: 13, color: "var(--accent-violet)" }}
+              className="text-accent-violet mt-3 inline-flex items-center gap-1 text-[13px]"
             >
               Read More <ChevronRight size={14} />
             </Link>

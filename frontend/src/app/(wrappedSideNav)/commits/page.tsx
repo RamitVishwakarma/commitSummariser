@@ -4,16 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import { TopBar } from "@/components/layout/top-bar";
 import { allCommits } from "@/lib/mock";
+import { cn } from "@/lib/utils";
 import { Search, Eye, Flag, Trash2, RotateCcw } from "lucide-react";
 
 type Status = "all" | "clean" | "flagged" | "deleted";
 
-export default function CommitsPage() {
+export default function CommitsPage(): React.JSX.Element {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<Status>("all");
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
-  const filtered = allCommits.filter((c) => {
+  const filtered = allCommits.filter(c => {
     if (search && !c.message.toLowerCase().includes(search.toLowerCase())) return false;
     if (statusFilter !== "all" && c.status !== statusFilter) return false;
     return true;
@@ -21,41 +22,44 @@ export default function CommitsPage() {
 
   const toggleSelect = (id: string) => {
     const next = new Set(selected);
-    next.has(id) ? next.delete(id) : next.add(id);
+    if (next.has(id)) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
     setSelected(next);
   };
 
   const statuses: Status[] = ["all", "clean", "flagged", "deleted"];
 
   return (
-    <div className="flex-1 min-h-screen overflow-y-auto">
+    <div className="min-h-screen flex-1 overflow-y-auto">
       <TopBar title="Commits" />
-      <div className="p-8 max-w-[1200px] mx-auto space-y-4">
-        <div className="flex items-center gap-3 flex-wrap">
-          <div className="relative flex-1 min-w-[200px]">
+      <div className="mx-auto max-w-[1200px] space-y-4 p-8">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="relative min-w-[200px] flex-1">
             <Search
               size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2"
-              style={{ color: "var(--text-muted)" }}
+              className="text-text-muted absolute top-1/2 left-3 -translate-y-1/2"
             />
             <input
               className="glass-input w-full pl-10"
               placeholder="Search commit messages..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={e => setSearch(e.target.value)}
             />
           </div>
           <div className="flex gap-1">
-            {statuses.map((s) => (
+            {statuses.map(s => (
               <button
                 key={s}
                 onClick={() => setStatusFilter(s)}
-                className="pill cursor-pointer transition-all"
-                style={{
-                  background: statusFilter === s ? "var(--accent-violet)" : undefined,
-                  color: statusFilter === s ? "white" : "var(--text-secondary)",
-                  borderColor: statusFilter === s ? "var(--accent-violet)" : undefined,
-                }}
+                className={cn(
+                  "pill cursor-pointer transition-all",
+                  statusFilter === s
+                    ? "bg-accent-violet border-accent-violet text-white"
+                    : "text-text-secondary",
+                )}
               >
                 {s.charAt(0).toUpperCase() + s.slice(1)}
               </button>
@@ -77,7 +81,7 @@ export default function CommitsPage() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((c) => (
+              {filtered.map(c => (
                 <tr key={c.id}>
                   <td>
                     <input
@@ -88,35 +92,26 @@ export default function CommitsPage() {
                     />
                   </td>
                   <td>
-                    <span className="mono" style={{ fontSize: 12, color: "var(--accent-violet)" }}>
-                      {c.hash}
-                    </span>
+                    <span className="mono text-accent-violet text-[12px]">{c.hash}</span>
                   </td>
                   <td>
-                    <Link href={`/repositories/${c.repoId}`} style={{ fontSize: 13, color: "var(--accent-blue)" }}>
+                    <Link
+                      href={`/repositories/${c.repoId}`}
+                      className="text-accent-blue text-[13px]"
+                    >
                       {c.repo}
                     </Link>
                   </td>
-                  <td style={{ fontSize: 13, color: "var(--text-secondary)" }}>{c.message}</td>
-                  <td style={{ fontSize: 12, color: "var(--text-muted)" }}>{c.time}</td>
+                  <td className="text-text-secondary text-[13px]">{c.message}</td>
+                  <td className="text-text-muted text-[12px]">{c.time}</td>
                   <td>
                     <span
-                      className="pill"
-                      style={{
-                        fontSize: 10,
-                        color:
-                          c.status === "clean"
-                            ? "var(--accent-teal)"
-                            : c.status === "flagged"
-                              ? "var(--accent-amber)"
-                              : "var(--accent-rose)",
-                        borderColor:
-                          c.status === "clean"
-                            ? "rgba(45,212,191,0.3)"
-                            : c.status === "flagged"
-                              ? "rgba(245,158,11,0.3)"
-                              : "rgba(244,63,94,0.3)",
-                      }}
+                      className={cn(
+                        "pill text-[10px]",
+                        c.status === "clean" && "text-accent-teal border-[rgba(45,212,191,0.3)]",
+                        c.status === "flagged" && "text-accent-amber border-[rgba(245,158,11,0.3)]",
+                        c.status === "deleted" && "text-accent-rose border-[rgba(244,63,94,0.3)]",
+                      )}
                     >
                       {c.status}
                     </span>
@@ -126,10 +121,10 @@ export default function CommitsPage() {
                       <button className="btn-ghost p-1">
                         <Eye size={14} />
                       </button>
-                      <button className="btn-ghost p-1" style={{ color: "var(--accent-amber)" }}>
+                      <button className="text-accent-amber btn-ghost p-1">
                         <Flag size={14} />
                       </button>
-                      <button className="btn-ghost p-1" style={{ color: "var(--accent-rose)" }}>
+                      <button className="text-accent-rose btn-ghost p-1">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -142,27 +137,15 @@ export default function CommitsPage() {
 
         {/* Bulk actions */}
         {selected.size > 0 && (
-          <div
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 glass-card px-6 py-3 flex items-center gap-4 z-30"
-            style={{ backdropFilter: "blur(24px)", background: "rgba(255,255,255,0.12)" }}
-          >
-            <span style={{ fontSize: 13 }}>{selected.size} selected</span>
-            <button
-              className="btn-ghost flex items-center gap-1"
-              style={{ color: "var(--accent-rose)", fontSize: 13 }}
-            >
+          <div className="glass-card fixed bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4 bg-[rgba(255,255,255,0.12)] px-6 py-3 backdrop-blur-[24px]">
+            <span className="text-[13px]">{selected.size} selected</span>
+            <button className="text-accent-rose btn-ghost flex items-center gap-1 text-[13px]">
               <Trash2 size={14} /> Delete
             </button>
-            <button
-              className="btn-ghost flex items-center gap-1"
-              style={{ color: "var(--accent-amber)", fontSize: 13 }}
-            >
+            <button className="text-accent-amber btn-ghost flex items-center gap-1 text-[13px]">
               <Flag size={14} /> Flag
             </button>
-            <button
-              className="btn-ghost flex items-center gap-1"
-              style={{ color: "var(--accent-teal)", fontSize: 13 }}
-            >
+            <button className="text-accent-teal btn-ghost flex items-center gap-1 text-[13px]">
               <RotateCcw size={14} /> Restore
             </button>
           </div>

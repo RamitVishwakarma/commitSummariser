@@ -15,14 +15,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "GitPulse — Your commits, summarised",
-  description: "Automatic daily commit tracking, AI-powered summaries, and a yearly map of your growth.",
+  description:
+    "Automatic daily commit tracking, AI-powered summaries, and a yearly map of your growth.",
 };
 
 interface RootLayoutProps {
   children: ReactNode;
 }
 
-export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
+export default function RootLayout({ children }: Readonly<RootLayoutProps>): React.JSX.Element {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">{children}</body>
