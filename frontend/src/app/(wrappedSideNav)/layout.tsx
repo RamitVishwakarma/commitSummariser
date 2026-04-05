@@ -2,7 +2,11 @@ import type { ReactNode } from "react";
 import { Background } from "@/components/layout/background";
 import { Sidebar } from "@/components/layout/sidebar";
 
-export default function WrappedSideNavLayout({ children }: { children: ReactNode }) {
+interface WrappedSideNavLayoutProps {
+  children: ReactNode;
+}
+
+export default function WrappedSideNavLayout({ children }: WrappedSideNavLayoutProps) {
   return (
     <div className="flex min-h-screen relative">
       <Background />
