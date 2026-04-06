@@ -4,6 +4,8 @@ import { todayCommits, weeklySummaries, monthlySummaries } from "@/lib/mock";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight, ArrowDownRight, Sparkles, ChevronRight, Circle } from "lucide-react";
 
+import { groupCommitsByRepo } from "@/components/features/dashboard/dashboardUtils";
+
 const stats = [
   { label: "Repositories Tracked", value: "6", delta: "+1 this month", positive: true },
   { label: "Commits This Week", value: "24", delta: "+8 from last week", positive: true },
@@ -18,13 +20,7 @@ const repoLangDotClasses: Record<string, string> = {
 };
 
 export default function DashboardPage(): React.JSX.Element | null {
-  const grouped = todayCommits.reduce(
-    (acc, c) => {
-      (acc[c.repo] ??= []).push(c);
-      return acc;
-    },
-    {} as Record<string, typeof todayCommits>,
-  );
+  const grouped = groupCommitsByRepo(todayCommits);
 
   const latestWeekly = weeklySummaries[0];
   const latestMonthly = monthlySummaries[0];

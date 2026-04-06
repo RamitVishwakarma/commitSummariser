@@ -1,47 +1,15 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import { TopBar } from "@/components/layout/top-bar";
 import { repos, allCommits } from "@/lib/mock";
 import { ExternalLink, RefreshCw, Eye, Flag, Trash2, Circle } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { RepositoryStats } from "@/components/features/repositories/RepositoryStats";
 
-const chartData = [
-  { day: "Mon", commits: 5 },
-  { day: "Tue", commits: 8 },
-  { day: "Wed", commits: 3 },
-  { day: "Thu", commits: 6 },
-  { day: "Fri", commits: 12 },
-  { day: "Sat", commits: 2 },
-  { day: "Sun", commits: 4 },
-];
-
-interface CommitTooltipPayloadEntry {
-  value?: number | string;
+interface RepoDetailPageProps {
+  params: Promise<{ repoId: string }>;
 }
 
-interface CommitTooltipProps {
-  active?: boolean;
-  label?: string;
-  payload?: CommitTooltipPayloadEntry[];
-}
-
-function CommitTooltip({ active, label, payload }: CommitTooltipProps): React.JSX.Element | null {
-  if (!active || !payload || payload.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="text-text-primary rounded-lg border border-[rgba(45,212,191,0.15)] bg-[rgba(10,18,20,0.95)] px-3 py-2 text-[12px]">
-      <div className="text-text-secondary">{label}</div>
-      <div className="font-semibold">{payload[0]?.value} commits</div>
-    </div>
-  );
-}
-
-export default function RepoDetailPage(): React.JSX.Element | null {
-  const params = useParams();
-  const repoId = typeof params["repoId"] === "string" ? params["repoId"] : undefined;
+export default async function RepoDetailPage({ params }: RepoDetailPageProps): Promise<React.JSX.Element | null> {
+  const p = await params;
+  const repoId = p.repoId;
 
   const repo = repos.find(r => r.id === repoId) ?? repos[0];
   const commits = allCommits.filter(c => c.repoId === repoId);
@@ -51,7 +19,7 @@ export default function RepoDetailPage(): React.JSX.Element | null {
   return (
     <div className="min-h-screen flex-1 overflow-y-auto">
       <TopBar title={repo.name} />
-      <div className="mx-auto max-w-[1200px] space-y-6 p-8">
+      <div className="mx-auto max-w-300 space-y-6 p-8">
         {/* Header */}
         <div className="glass-card p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
@@ -123,33 +91,7 @@ export default function RepoDetailPage(): React.JSX.Element | null {
             </table>
           </div>
 
-          {/* Stats */}
-          <div className="glass-card p-5">
-            <h3 className="mb-4 text-[16px] font-semibold">Commit Activity</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={chartData}>
-                <XAxis
-                  dataKey="day"
-                  tick={{ fill: "#9898B0", fontSize: 11 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis tick={{ fill: "#9898B0", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip content={<CommitTooltip />} />
-                <Bar dataKey="commits" fill="#2DD4BF" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-            <div className="mt-4 space-y-2">
-              <div className="flex justify-between text-[12px]">
-                <span className="text-text-secondary">Most active day</span>
-                <span className="font-semibold">Friday</span>
-              </div>
-              <div className="flex justify-between text-[12px]">
-                <span className="text-text-secondary">Avg commits/week</span>
-                <span className="font-semibold">5.7</span>
-              </div>
-            </div>
-          </div>
+          <RepositoryStats />
         </div>
       </div>
     </div>

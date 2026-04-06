@@ -110,7 +110,7 @@ export function ExportForm(): React.JSX.Element {
           </div>
         </div>
 
-        <button className="btn-primary flex w-full items-center justify-center gap-2 !py-[14px] text-base">
+        <button className="btn-primary flex w-full items-center justify-center gap-2 !py-3.5 text-base">
           <Download size={18} /> Download {month} {year}
         </button>
       </div>
