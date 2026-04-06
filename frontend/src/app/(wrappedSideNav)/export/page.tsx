@@ -1,5 +1,5 @@
 import { TopBar } from "@/components/layout/top-bar";
-import { ExportForm } from "./ExportForm";
+import { ExportForm } from "@/components/features/export/ExportForm";
 
 export default function ExportPage(): React.JSX.Element {
   return (

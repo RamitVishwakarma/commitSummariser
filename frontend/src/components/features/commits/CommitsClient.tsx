@@ -24,7 +24,7 @@ export function CommitsClient({ commits }: CommitsClientProps): React.JSX.Elemen
     return true;
   });
 
-  const toggleSelect = (id: string) => {
+  const handleToggleSelect = (id: string): void => {
     const next = new Set(selected);
     if (next.has(id)) {
       next.delete(id);
@@ -37,9 +37,9 @@ export function CommitsClient({ commits }: CommitsClientProps): React.JSX.Elemen
   const statuses: Status[] = ["all", "clean", "flagged", "deleted"];
 
   return (
-    <div className="mx-auto max-w-[1200px] space-y-4 p-8">
+    <div className="mx-auto max-w-7xl space-y-4 p-8">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative min-w-[200px] flex-1">
+        <div className="relative min-w-50 flex-1">
           <Search
             size={16}
             className="text-text-muted absolute top-1/2 left-3 -translate-y-1/2"
@@ -89,27 +89,27 @@ export function CommitsClient({ commits }: CommitsClientProps): React.JSX.Elemen
                   <input
                     type="checkbox"
                     checked={selected.has(c.id)}
-                    onChange={() => toggleSelect(c.id)}
+                    onChange={() => handleToggleSelect(c.id)}
                     className="accent-violet-500"
                   />
                 </td>
                 <td>
-                  <span className="mono text-accent-violet text-[12px]">{c.hash}</span>
+                  <span className="mono text-accent-violet text-xs">{c.hash}</span>
                 </td>
                 <td>
                   <Link
                     href={`/repositories/${c.repoId}`}
-                    className="text-accent-blue text-[13px]"
+                    className="text-accent-blue text-sm"
                   >
                     {c.repo}
                   </Link>
                 </td>
-                <td className="text-text-secondary text-[13px]">{c.message}</td>
-                <td className="text-text-muted text-[12px]">{c.time}</td>
+                <td className="text-text-secondary text-sm">{c.message}</td>
+                <td className="text-text-muted text-xs">{c.time}</td>
                 <td>
                   <span
                     className={cn(
-                      "pill text-[10px]",
+                      "pill text-3xs",
                       c.status === "clean" && "text-accent-teal border-[rgba(45,212,191,0.3)]",
                       c.status === "flagged" && "text-accent-amber border-[rgba(245,158,11,0.3)]",
                       c.status === "deleted" && "text-accent-rose border-[rgba(244,63,94,0.3)]",
@@ -139,15 +139,15 @@ export function CommitsClient({ commits }: CommitsClientProps): React.JSX.Elemen
 
       {/* Bulk actions */}
       {selected.size > 0 && (
-        <div className="glass-card fixed bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4 bg-[rgba(255,255,255,0.12)] px-6 py-3 backdrop-blur-[24px]">
-          <span className="text-[13px]">{selected.size} selected</span>
-          <button className="text-accent-rose btn-ghost flex items-center gap-1 text-[13px]">
+        <div className="glass-card fixed bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4 bg-[rgba(255,255,255,0.12)] px-6 py-3 backdrop-blur-xl">
+          <span className="text-sm">{selected.size} selected</span>
+          <button className="text-accent-rose btn-ghost flex items-center gap-1 text-sm">
             <Trash2 size={14} /> Delete
           </button>
-          <button className="text-accent-amber btn-ghost flex items-center gap-1 text-[13px]">
+          <button className="text-accent-amber btn-ghost flex items-center gap-1 text-sm">
             <Flag size={14} /> Flag
           </button>
-          <button className="text-accent-teal btn-ghost flex items-center gap-1 text-[13px]">
+          <button className="text-accent-teal btn-ghost flex items-center gap-1 text-sm">
             <RotateCcw size={14} /> Restore
           </button>
         </div>

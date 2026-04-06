@@ -31,7 +31,7 @@ export function FeaturesSection(): React.JSX.Element {
   };
 
   return (
-    <section id="features" className="mx-auto max-w-[1280px] px-8 py-24">
+    <section id="features" className="mx-auto max-w-7xl px-8 py-24">
       <div className="mb-16 text-center">
         <h2 className="text-3xl font-bold">Everything you need to track your impact</h2>
         <p className="text-text-secondary mt-2 text-base">
@@ -50,7 +50,7 @@ export function FeaturesSection(): React.JSX.Element {
           >
             <div
               className={cn(
-                "mb-4 flex size-12 items-center justify-center rounded-[12px]",
+                "mb-4 flex size-12 items-center justify-center rounded-xl",
                 getFeatureColorClasses(f.title).bg,
               )}
             >

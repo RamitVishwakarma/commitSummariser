@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Activity, GitBranch } from "lucide-react";
 import { Background } from "@/components/layout/background";
-import { HeroSection } from "@/app/components/landing/HeroSection";
-import { FeaturesSection } from "@/app/components/landing/FeaturesSection";
-import { StepsSection } from "@/app/components/landing/StepsSection";
-import { SummarySection } from "@/app/components/landing/SummarySection";
+import { HeroSection } from "@/components/features/landing/HeroSection";
+import { FeaturesSection } from "@/components/features/landing/FeaturesSection";
+import { StepsSection } from "@/components/features/landing/StepsSection";
+import { SummarySection } from "@/components/features/landing/SummarySection";
 
 export default function LandingPage(): React.JSX.Element {
   return (
@@ -17,7 +17,7 @@ export default function LandingPage(): React.JSX.Element {
             <Activity size={24} className="text-accent-violet" />
             <span className="text-xl font-bold">GitPulse</span>
           </div>
-          <Link href="/dashboard" className="btn-primary !px-5 !py-2 text-sm">
+          <Link href="/dashboard" className="btn-primary px-5 py-2 text-sm">
             Dashboard
           </Link>
         </nav>
@@ -29,11 +29,11 @@ export default function LandingPage(): React.JSX.Element {
 
         {/* CTA */}
         <section className="py-24 text-center">
-          <h2 className="text-[36px] font-bold">Start tracking your impact today.</h2>
+          <h2 className="text-4xl font-bold">Start tracking your impact today.</h2>
           <p className="text-text-secondary mt-2 text-base">Self-hosted. Private. Yours.</p>
           <Link
             href="/dashboard"
-            className="btn-primary mt-8 inline-block !px-8 !py-[14px] text-base"
+            className="btn-primary mt-8 inline-block px-8 py-3.5 text-base"
           >
             Get Started
           </Link>
@@ -48,7 +48,7 @@ export default function LandingPage(): React.JSX.Element {
         </section>
 
         {/* Footer */}
-        <footer className="text-text-muted border-t border-[rgba(255,255,255,0.06)] py-6 text-center text-[13px]">
+        <footer className="text-text-muted border-t border-border-subtle py-6 text-center text-sm">
           Built by Ramit &middot;{" "}
           <a href="#" className="text-accent-violet">
             GitHub

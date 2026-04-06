@@ -26,57 +26,57 @@ const NAV_ITEMS = [
 ];
 
 export function Sidebar(): React.JSX.Element {
-  const [collapsed, setCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
 
   return (
     <aside
       className={cn(
-        "sticky top-0 z-20 flex h-screen flex-col border-r border-[rgba(45,212,191,0.08)] bg-[rgba(10,18,20,0.6)] backdrop-blur-md transition-all duration-250 ease-in-out",
-        collapsed ? "w-16" : "w-60",
+        "sticky top-0 z-20 flex h-screen flex-col border-r border-border-teal-subtle bg-bg-overlay backdrop-blur-md transition-all duration-250 ease-in-out",
+        isCollapsed ? "w-16" : "w-60",
       )}
     >
       <div className="flex h-16 items-center gap-2 p-4">
         <Activity size={24} className="text-accent-violet" />
-        {!collapsed && (
-          <span className="text-text-primary text-[18px] font-semibold">GitPulse</span>
+        {!isCollapsed && (
+          <span className="text-text-primary text-lg font-semibold">GitPulse</span>
         )}
       </div>
 
       <nav className="mt-2 flex flex-1 flex-col gap-1 px-2">
         {NAV_ITEMS.map(item => {
-          const active = pathname?.startsWith(item.to) ?? false;
+          const isActive = pathname?.startsWith(item.to) ?? false;
           return (
             <Link
               key={item.to}
               href={item.to}
               className={cn(
-                "relative flex items-center gap-3 rounded-[10px] border-l-[3px] py-2.5 transition-all duration-150",
-                collapsed ? "justify-center px-0" : "justify-start px-3",
-                active
+                "relative flex items-center gap-3 rounded-lg border-l-[3px] py-2.5 transition-all duration-150",
+                isCollapsed ? "justify-center px-0" : "justify-start px-3",
+                isActive
                   ? "text-accent-violet border-l-accent-violet bg-bg-elevated"
                   : "text-text-secondary border-l-transparent bg-transparent",
               )}
             >
               <item.icon size={20} />
-              {!collapsed && <span className="text-sm">{item.label}</span>}
+              {!isCollapsed && <span className="text-sm">{item.label}</span>}
             </Link>
           );
         })}
       </nav>
 
-      <div className="flex items-center gap-2 border-t border-[rgba(255,255,255,0.08)] p-3">
-        <div className="flex size-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#1a8a7d,#2DD4BF)] text-xs font-semibold text-[#0a1214]">
+      <div className="flex items-center gap-2 border-t border-border-subtle p-3">
+        <div className="flex size-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#1a8a7d,#2DD4BF)] text-xs font-semibold text-bg-deep">
           R
         </div>
-        {!collapsed && <span className="text-text-secondary text-[13px]">Ramit</span>}
+        {!isCollapsed && <span className="text-text-secondary text-sm">Ramit</span>}
       </div>
 
       <button
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={() => setIsCollapsed(!isCollapsed)}
         className="text-text-secondary border-border-glass bg-bg-elevated absolute top-20 -right-3 flex size-6 items-center justify-center rounded-full border"
       >
-        {collapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
+        {isCollapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
       </button>
     </aside>
   );

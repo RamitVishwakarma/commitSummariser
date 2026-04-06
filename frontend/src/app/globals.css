@@ -2,7 +2,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "./gitpulse.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -21,6 +20,19 @@
   --color-accent-blue: var(--accent-blue);
   --color-glow-violet: var(--glow-violet);
   --color-glow-teal: var(--glow-teal);
+
+  /* New design tokens — repeated rgba/hex values consolidated */
+  --color-option-bg: var(--option-bg);
+  --color-lang-ts: var(--lang-ts);
+  --color-lang-go: var(--lang-go);
+  --color-lang-default: var(--lang-default);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-teal-subtle: var(--border-teal-subtle);
+  --color-bg-hover-subtle: var(--bg-hover-subtle);
+  --color-bg-overlay: var(--bg-overlay);
+  --color-bg-overlay-strong: var(--bg-overlay-strong);
+  --color-tick-muted: var(--tick-muted);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -62,9 +74,44 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Custom font sizes for sub-xs values */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+  --text-3xs: 0.625rem;
+  --text-3xs--line-height: 0.875rem;
 }
 
 :root {
+  /* ── GitPulse design tokens ── */
+  --bg-deep: #0a1214;
+  --bg-surface: rgba(13, 30, 35, 0.7);
+  --bg-elevated: rgba(18, 42, 48, 0.8);
+  --border-glass: rgba(45, 212, 191, 0.12);
+  --text-primary: #E0F2F1;
+  --text-secondary: #7FACA5;
+  --text-muted: #3D6B65;
+  --accent-violet: #2DD4BF;
+  --accent-teal: #2DD4BF;
+  --accent-rose: #F43F5E;
+  --accent-amber: #F59E0B;
+  --accent-blue: #38BDF8;
+  --glow-violet: rgba(45, 212, 191, 0.3);
+  --glow-teal: rgba(45, 212, 191, 0.25);
+
+  /* New consolidated tokens */
+  --option-bg: #1a1a2e;
+  --lang-ts: #3178C6;
+  --lang-go: #00ADD8;
+  --lang-default: #8B5CF6;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-teal-subtle: rgba(45, 212, 191, 0.08);
+  --bg-hover-subtle: rgba(255, 255, 255, 0.04);
+  --bg-overlay: rgba(10, 18, 20, 0.6);
+  --bg-overlay-strong: rgba(10, 18, 20, 0.7);
+  --tick-muted: #9898B0;
+
+  /* ── shadcn tokens ── */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -133,12 +180,158 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* ═══════════════════════════════════════════════════════
+   GitPulse component base styles (merged from gitpulse.css)
+   ═══════════════════════════════════════════════════════ */
+
+@keyframes float-orb {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(30px, -20px); }
+  50% { transform: translate(-20px, 30px); }
+  75% { transform: translate(20px, 20px); }
+}
+
+.glass-card {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(45,212,191,0.06);
+}
+
+.glass-card-hover {
+  transition: all 0.2s ease;
+}
+.glass-card-hover:hover {
+  transform: scale(1.01);
+  border-color: rgba(45,212,191,0.25);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(45,212,191,0.08), 0 0 20px var(--glow-teal);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #1a8a7d, #2DD4BF);
+  color: #0a1214;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 24px var(--glow-teal);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent-teal);
+  border: 1px solid rgba(45,212,191,0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-secondary:hover {
+  background: rgba(45,212,191,0.1);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: var(--accent-rose);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.glass-input {
+  background: var(--bg-overlay);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 10px 16px;
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.2s ease;
+}
+.glass-input:focus {
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 12px var(--glow-teal);
+}
+.glass-input::placeholder {
+  color: var(--text-muted);
+}
+
+.glass-table th {
+  background: rgba(13, 30, 35, 0.8);
+  color: var(--text-secondary);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.glass-table td {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+.glass-table tr:hover td {
+  background: var(--bg-hover-subtle);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Orb animation utilities */
+.animate-orb-slow {
+  animation: float-orb 45s ease-in-out infinite;
+}
+.animate-orb-slower {
+  animation: float-orb 55s ease-in-out infinite reverse;
+}
+.animate-orb-fast {
+  animation: float-orb 35s ease-in-out infinite 10s;
+}
+
+/* Pill border color for hero section */
+.pill-border-teal {
+  border-color: rgba(45, 212, 191, 0.3);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
   }
   html {
     @apply font-sans;
