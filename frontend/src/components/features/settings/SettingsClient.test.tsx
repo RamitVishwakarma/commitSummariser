@@ -1,17 +1,22 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { expect, test } from "vitest";
-import { SettingsClient } from "./SettingsClient";
+import { SettingsClient } from "@/components/features/settings/SettingsClient";
 
-test("renders and shows pat correctly", () => {
-  render(<SettingsClient />);
+const mockRepos = [
+  { id: "1", name: "gitpulse", language: "TypeScript", langColor: "#3178C6", status: "active" },
+];
+
+test("renders and toggles PAT visibility", async () => {
+  const user = userEvent.setup();
+
+  render(<SettingsClient repos={mockRepos} />);
   expect(screen.getByText("GitHub Connection")).toBeInTheDocument();
-  
+
   const tokenInput = screen.getByDisplayValue("ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
   expect(tokenInput).toHaveAttribute("type", "password");
-  
-  const toggleBtn = tokenInput.nextElementSibling;
-  if(toggleBtn) {
-    fireEvent.click(toggleBtn);
-    expect(tokenInput).toHaveAttribute("type", "text");
-  }
+
+  const toggleBtn = screen.getByRole("button", { name: /toggle password visibility/i });
+  await user.click(toggleBtn);
+  expect(tokenInput).toHaveAttribute("type", "text");
 });

@@ -60,7 +60,7 @@ export function SummarySection(): React.JSX.Element {
               </span>
             </div>
             <h3 className="mb-1 text-base font-semibold">{s.range}</h3>
-            <p className="text-text-secondary text-[13px] leading-relaxed">{s.text}</p>
+            <p className="text-text-secondary text-sm leading-relaxed">{s.text}</p>
           </motion.div>
         ))}
       </div>

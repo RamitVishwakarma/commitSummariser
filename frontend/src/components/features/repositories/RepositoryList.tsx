@@ -39,7 +39,7 @@ export function RepositoryList({ repos }: RepositoryListProps): React.JSX.Elemen
             onChange={e => setSearch(e.target.value)}
           />
         </div>
-        <button className="btn-primary flex items-center gap-2 text-[13px]">
+        <button className="btn-primary flex items-center gap-2 text-sm">
           <Plus size={14} /> Add Repository
         </button>
       </div>
@@ -51,19 +51,19 @@ export function RepositoryList({ repos }: RepositoryListProps): React.JSX.Elemen
             href={`/repositories/${r.id}`}
             className="glass-card glass-card-hover block p-5"
           >
-            <h3 className="mb-1 text-[17px] font-semibold">{r.name}</h3>
-            <div className="pill mb-3 inline-flex text-[11px]">
+            <h3 className="mb-1 text-lg font-semibold">{r.name}</h3>
+            <div className="pill mb-3 inline-flex text-2xs">
               <Circle size={8} fill={r.langColor} color={r.langColor} /> {r.language}
             </div>
-            <p className="text-text-secondary mb-3 text-[13px] leading-[1.5]">{r.description}</p>
-            <div className="text-text-muted flex items-center justify-between text-[12px]">
+            <p className="text-text-secondary mb-3 text-sm leading-normal">{r.description}</p>
+            <div className="text-text-muted flex items-center justify-between text-xs">
               <span>{r.commits} commits</span>
               <span>{r.lastCommit}</span>
               <span
                 className={cn(
-                  "pill text-[10px]",
+                  "pill text-3xs",
                   r.status === "active"
-                    ? "text-accent-teal border-[rgba(45,212,191,0.3)]"
+                    ? "text-accent-teal border-glow-violet"
                     : "text-text-muted",
                 )}
               >
