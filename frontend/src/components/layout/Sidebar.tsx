@@ -32,15 +32,13 @@ export function Sidebar(): React.JSX.Element {
   return (
     <aside
       className={cn(
-        "sticky top-0 z-20 flex h-screen flex-col border-r border-border-teal-subtle bg-bg-overlay backdrop-blur-md transition-all duration-250 ease-in-out",
+        "border-border-teal-subtle bg-bg-overlay sticky top-0 z-20 flex h-screen flex-col border-r backdrop-blur-md transition-all duration-250 ease-in-out",
         isCollapsed ? "w-16" : "w-60",
       )}
     >
       <div className="flex h-16 items-center gap-2 p-4">
         <Activity size={24} className="text-accent-violet" />
-        {!isCollapsed && (
-          <span className="text-text-primary text-lg font-semibold">GitPulse</span>
-        )}
+        {!isCollapsed && <span className="text-text-primary text-lg font-semibold">GitPulse</span>}
       </div>
 
       <nav className="mt-2 flex flex-1 flex-col gap-1 px-2">
@@ -65,8 +63,8 @@ export function Sidebar(): React.JSX.Element {
         })}
       </nav>
 
-      <div className="flex items-center gap-2 border-t border-border-subtle p-3">
-        <div className="flex size-8 items-center justify-center rounded-full sidebar-gradient text-xs font-semibold text-bg-deep">
+      <div className="border-border-subtle flex items-center gap-2 border-t p-3">
+        <div className="sidebar-gradient text-bg-deep flex size-8 items-center justify-center rounded-full text-xs font-semibold">
           R
         </div>
         {!isCollapsed && <span className="text-text-secondary text-sm">Ramit</span>}
