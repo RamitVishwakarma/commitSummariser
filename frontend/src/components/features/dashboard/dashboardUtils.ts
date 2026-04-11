@@ -1,13 +1,9 @@
-import type { todayCommits } from "@/lib/mock";
-
-type Commit = (typeof todayCommits)[number];
+import type { Commit } from "@/lib/types/commit";
 
 export function groupCommitsByRepo(commits: Commit[]): Record<string, Commit[]> {
-  return commits.reduce(
-    (acc, c) => {
-      (acc[c.repo] ??= []).push(c);
-      return acc;
-    },
-    {} as Record<string, Commit[]>,
-  );
+  const initial: Record<string, Commit[]> = {};
+  return commits.reduce((acc, c) => {
+    (acc[c.repo] ??= []).push(c);
+    return acc;
+  }, initial);
 }

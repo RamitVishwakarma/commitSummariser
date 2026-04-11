@@ -4,9 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Search, Eye, Flag, Trash2, RotateCcw } from "lucide-react";
-import type { allCommits } from "@/lib/mock";
+import type { Commit } from "@/lib/types/commit";
 
-type Commit = (typeof allCommits)[number];
 type Status = "all" | "clean" | "flagged" | "deleted";
 
 interface CommitsClientProps {
@@ -110,9 +109,9 @@ export function CommitsClient({ commits }: CommitsClientProps): React.JSX.Elemen
                   <span
                     className={cn(
                       "pill text-3xs",
-                      c.status === "clean" && "text-accent-teal border-[rgba(45,212,191,0.3)]",
-                      c.status === "flagged" && "text-accent-amber border-[rgba(245,158,11,0.3)]",
-                      c.status === "deleted" && "text-accent-rose border-[rgba(244,63,94,0.3)]",
+                      c.status === "clean" && "text-accent-teal border-glow-violet",
+                      c.status === "flagged" && "text-accent-amber border-border-amber-subtle",
+                      c.status === "deleted" && "text-accent-rose border-border-rose-subtle",
                     )}
                   >
                     {c.status}
@@ -139,7 +138,7 @@ export function CommitsClient({ commits }: CommitsClientProps): React.JSX.Elemen
 
       {/* Bulk actions */}
       {selected.size > 0 && (
-        <div className="glass-card fixed bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4 bg-[rgba(255,255,255,0.12)] px-6 py-3 backdrop-blur-xl">
+        <div className="glass-card fixed bottom-6 left-1/2 z-30 flex -translate-x-1/2 items-center gap-4 bg-bg-glass-panel px-6 py-3 backdrop-blur-xl">
           <span className="text-sm">{selected.size} selected</span>
           <button className="text-accent-rose btn-ghost flex items-center gap-1 text-sm">
             <Trash2 size={14} /> Delete

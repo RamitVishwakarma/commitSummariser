@@ -48,7 +48,7 @@ export function HeroSection(): React.JSX.Element {
       </motion.div>
       <motion.h1
         {...HEADLINE_ANIMATION}
-        className="max-w-3xl text-[clamp(36px,5vw,64px)] leading-[1.1] font-bold"
+        className="max-w-3xl text-hero-heading font-bold"
       >
         Your commits tell a story. <span className="text-accent-violet">GitPulse</span> reads it.
       </motion.h1>

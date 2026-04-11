@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight, ArrowDownRight, Sparkles, ChevronRight, Circle } from "lucide-react";
-import { TopBar } from "@/components/layout/top-bar";
+import { TopBar } from "@/components/layout/TopBar";
 import { groupCommitsByRepo } from "@/components/features/dashboard/dashboardUtils";
 
-import type { todayCommits as TodayCommitsType } from "@/lib/mock";
-
-type TodayCommits = typeof TodayCommitsType;
+import type { Commit } from "@/lib/types/commit";
 
 interface Stat {
   label: string;
@@ -28,7 +26,7 @@ interface MonthlySummaryItem {
 }
 
 interface DashboardClientProps {
-  todayCommits: TodayCommits;
+  todayCommits: Commit[];
   weeklySummaries: WeeklySummaryItem[];
   monthlySummaries: MonthlySummaryItem[];
 }
@@ -85,7 +83,7 @@ export function DashboardClient({
         <div className="glass-card p-6">
           <div className="mb-4 flex items-center gap-2">
             <h2 className="text-lg font-semibold">Today&apos;s Commits</h2>
-            <Circle size={8} fill="#2DD4BF" color="#2DD4BF" />
+            <Circle size={8} fill="var(--accent-teal)" color="var(--accent-teal)" />
           </div>
           {Object.entries(grouped).map(([repo, commits]) => (
             <div key={repo} className="mb-4 last:mb-0">

@@ -16,7 +16,7 @@ export function ExportForm(): React.JSX.Element {
   const [showPrompt, setShowPrompt] = useState(false);
 
   return (
-    <div className="mx-auto max-w-[800px] space-y-6 p-8">
+    <div className="mx-auto max-w-3xl space-y-6 p-8">
       <div className="glass-card p-8">
         <h2 className="mb-6 text-2xl font-bold">Download Monthly Data</h2>
 
@@ -29,7 +29,7 @@ export function ExportForm(): React.JSX.Element {
               onChange={e => setMonth(e.target.value)}
             >
               {MONTHS.map(m => (
-                <option key={m} value={m} className="bg-[#1a1a2e]">
+                <option key={m} value={m} className="bg-option-bg">
                   {m}
                 </option>
               ))}
@@ -43,7 +43,7 @@ export function ExportForm(): React.JSX.Element {
               onChange={e => setYear(e.target.value)}
             >
               {YEARS.map(y => (
-                <option key={y} value={y} className="bg-[#1a1a2e]">
+                <option key={y} value={y} className="bg-option-bg">
                   {y}
                 </option>
               ))}
@@ -71,7 +71,7 @@ export function ExportForm(): React.JSX.Element {
           </div>
         </div>
 
-        <label className="text-text-secondary mb-6 flex cursor-pointer items-center gap-2 text-[13px]">
+        <label className="text-text-secondary mb-6 flex cursor-pointer items-center gap-2 text-sm">
           <input
             type="checkbox"
             checked={includeLlm}
@@ -98,11 +98,11 @@ export function ExportForm(): React.JSX.Element {
                 {MOCK_ROWS.map(r => (
                   <tr key={r.hash}>
                     <td>
-                      <span className="mono text-accent-violet text-[11px]">{r.hash}</span>
+                      <span className="mono text-accent-violet text-2xs">{r.hash}</span>
                     </td>
                     <td className="text-accent-blue text-xs">{r.repo}</td>
                     <td className="text-text-secondary text-xs">{r.message}</td>
-                    <td className="text-text-muted text-[11px]">{r.date}</td>
+                    <td className="text-text-muted text-2xs">{r.date}</td>
                   </tr>
                 ))}
               </tbody>
@@ -110,7 +110,7 @@ export function ExportForm(): React.JSX.Element {
           </div>
         </div>
 
-        <button className="btn-primary flex w-full items-center justify-center gap-2 !py-3.5 text-base">
+        <button className="btn-primary flex w-full items-center justify-center gap-2 py-3.5 text-base">
           <Download size={18} /> Download {month} {year}
         </button>
       </div>
@@ -126,11 +126,11 @@ export function ExportForm(): React.JSX.Element {
         </button>
         {showPrompt && (
           <div className="mt-4">
-            <p className="text-text-secondary mb-3 text-[13px] leading-relaxed">
+            <p className="text-text-secondary mb-3 text-sm leading-relaxed">
               The LLM prompt file contains a pre-written prompt that you can use with any language
               model to regenerate or customise your summaries.
             </p>
-            <pre className="glass-card mono text-accent-teal overflow-x-auto p-4 text-[11px] leading-relaxed">
+            <pre className="glass-card mono text-accent-teal overflow-x-auto p-4 text-2xs leading-relaxed">
               {`You are an AI assistant analysing developer commit data.
 Given the following commits from {month} {year},
 generate a structured monthly summary including:

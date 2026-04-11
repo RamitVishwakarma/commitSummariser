@@ -12,22 +12,22 @@ const FEATURE_TRANSITIONS = FEATURES.map((_, i): { delay: number } => ({ delay: 
 export function FeaturesSection(): React.JSX.Element {
   const getFeatureColorClasses = (title: string): { bg: string; icon: string } => {
     if (title === "Every commit, captured automatically") {
-      return { bg: "bg-[rgba(45,212,191,0.12)]", icon: "text-accent-teal" };
+      return { bg: "bg-bg-teal-glass", icon: "text-accent-teal" };
     }
 
     if (title === "Organised by repo, enriched with metadata") {
-      return { bg: "bg-[rgba(56,189,248,0.12)]", icon: "text-accent-blue" };
+      return { bg: "bg-bg-blue-glass", icon: "text-accent-blue" };
     }
 
     if (title === "Remove the noise") {
-      return { bg: "bg-[rgba(244,63,94,0.12)]", icon: "text-accent-rose" };
+      return { bg: "bg-bg-rose-glass", icon: "text-accent-rose" };
     }
 
     if (title === "Take your data anywhere") {
-      return { bg: "bg-[rgba(56,189,248,0.12)]", icon: "text-accent-blue" };
+      return { bg: "bg-bg-blue-glass", icon: "text-accent-blue" };
     }
 
-    return { bg: "bg-[rgba(45,212,191,0.12)]", icon: "text-accent-teal" };
+    return { bg: "bg-bg-teal-glass", icon: "text-accent-teal" };
   };
 
   return (

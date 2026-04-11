@@ -10,7 +10,7 @@ const STEP_TRANSITIONS = STEPS.map((_, i): { delay: number } => ({ delay: i * 0.
 
 export function StepsSection(): React.JSX.Element {
   return (
-    <section className="bg-[rgba(255,255,255,0.02)] py-24">
+    <section className="bg-bg-faint-overlay py-24">
       <div className="mx-auto max-w-7xl px-8">
         <h2 className="mb-16 text-center text-3xl font-bold">How it works</h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
