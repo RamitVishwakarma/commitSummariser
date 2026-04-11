@@ -66,7 +66,7 @@ export function Sidebar(): React.JSX.Element {
       </nav>
 
       <div className="flex items-center gap-2 border-t border-border-subtle p-3">
-        <div className="flex size-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#1a8a7d,#2DD4BF)] text-xs font-semibold text-bg-deep">
+        <div className="flex size-8 items-center justify-center rounded-full sidebar-gradient text-xs font-semibold text-bg-deep">
           R
         </div>
         {!isCollapsed && <span className="text-text-secondary text-sm">Ramit</span>}

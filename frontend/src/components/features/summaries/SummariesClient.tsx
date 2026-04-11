@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { WeeklySummaryCard } from "./WeeklySummaryCard";
-import { MonthlySummaryCard } from "./MonthlySummaryCard";
-import { YearlySummaryCard } from "./YearlySummaryCard";
+import { WeeklySummaryCard } from "@/components/features/summaries/WeeklySummaryCard";
+import { MonthlySummaryCard } from "@/components/features/summaries/MonthlySummaryCard";
+import { YearlySummaryCard } from "@/components/features/summaries/YearlySummaryCard";
 
-import type { weeklySummaries, monthlySummaries, yearlySummary } from "@/lib/mock";
+import type { WeeklySummary } from "@/components/features/summaries/WeeklySummaryCard";
+import type { MonthlySummary } from "@/components/features/summaries/MonthlySummaryCard";
+import type { YearlySummary } from "@/components/features/summaries/YearlySummaryCard";
 
 type Tab = "weekly" | "monthly" | "yearly";
 
 interface SummariesClientProps {
-  weeklySummaries: typeof weeklySummaries;
-  monthlySummaries: typeof monthlySummaries;
-  yearlySummary: typeof yearlySummary;
+  weeklySummaries: WeeklySummary[];
+  monthlySummaries: MonthlySummary[];
+  yearlySummary: YearlySummary;
 }
 
 export function SummariesClient({
@@ -26,7 +28,7 @@ export function SummariesClient({
     new Set(weeklySummaries[0] ? [weeklySummaries[0].id] : []),
   );
 
-  const toggleCard = (id: string) => {
+  const handleToggleCard = (id: string) => {
     const next = new Set(expandedCards);
     if (next.has(id)) next.delete(id);
     else next.add(id);
@@ -36,13 +38,13 @@ export function SummariesClient({
   return (
     <div className="mx-auto max-w-300 p-8">
       {/* Tabs */}
-      <div className="mb-6 flex gap-1 border-b border-[rgba(255,255,255,0.06)] pb-px">
+      <div className="mb-6 flex gap-1 border-b border-border-subtle pb-px">
         {(["weekly", "monthly", "yearly"] as const).map(t => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={cn(
-              "px-4 py-2 text-[14px] font-medium transition-all relative",
+              "px-4 py-2 text-sm font-medium transition-all relative",
               tab === t ? "text-white" : "text-text-secondary hover:text-white",
             )}
           >
@@ -61,7 +63,7 @@ export function SummariesClient({
               key={s.id}
               summary={s}
               isExpanded={expandedCards.has(s.id)}
-              onToggle={toggleCard}
+              onToggle={handleToggleCard}
             />
           ))}
         </div>

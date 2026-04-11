@@ -2,10 +2,21 @@
 
 import { useState } from "react";
 import { Circle, Plus, Eye, EyeOff, Zap } from "lucide-react";
-import { repos } from "@/lib/mock";
 import { cn } from "@/lib/utils";
 
-export function SettingsClient(): React.JSX.Element {
+interface Repo {
+  id: string;
+  name: string;
+  language: string;
+  langColor: string;
+  status: string;
+}
+
+interface SettingsClientProps {
+  repos: Repo[];
+}
+
+export function SettingsClient({ repos }: SettingsClientProps): React.JSX.Element {
   const [showPat, setShowPat] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Record<string, boolean>>(
     Object.fromEntries(repos.map(r => [r.id, r.status === "active"])),
@@ -17,7 +28,7 @@ export function SettingsClient(): React.JSX.Element {
       <div className="glass-card p-6">
         <h3 className="mb-4 text-lg font-semibold">GitHub Connection</h3>
         <div className="mb-4 flex items-center gap-2">
-          <Circle size={8} fill="#2DD4BF" color="#2DD4BF" />
+          <Circle size={8} fill="var(--accent-teal)" color="var(--accent-teal)" />
           <span className="text-accent-teal text-sm">Connected</span>
         </div>
         <label className="text-text-secondary mb-1 block text-xs">
@@ -30,7 +41,7 @@ export function SettingsClient(): React.JSX.Element {
             value="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
             readOnly
           />
-          <button onClick={() => setShowPat(!showPat)} className="btn-ghost">
+          <button onClick={() => setShowPat(!showPat)} className="btn-ghost" aria-label="Toggle password visibility">
             {showPat ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
@@ -68,7 +79,7 @@ export function SettingsClient(): React.JSX.Element {
                   "relative inline-flex h-5 w-10 items-center justify-start rounded-full px-0.5 transition-colors",
                   (trackedRepos[r.id] ?? false)
                     ? "bg-accent-violet"
-                    : "bg-[rgba(255,255,255,0.1)]",
+                    : "bg-bg-muted-overlay",
                 )}
               >
                 <span
@@ -152,7 +163,7 @@ export function SettingsClient(): React.JSX.Element {
       </div>
 
       {/* Data Management */}
-      <div className="glass-card border-[rgba(244,63,94,0.2)] p-6">
+      <div className="glass-card border-border-rose-faint p-6">
         <h3 className="text-accent-rose mb-4 text-lg font-semibold">Data Management</h3>
         <div className="flex flex-wrap gap-3">
           <button className="btn-secondary text-sm">Export All Data</button>

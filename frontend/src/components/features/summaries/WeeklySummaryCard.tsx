@@ -1,6 +1,6 @@
 import { Sparkles, Download, Trash2, RefreshCw, ChevronDown, ChevronUp } from "lucide-react";
 
-interface WeeklySummary {
+export interface WeeklySummary {
   id: string;
   dateRange: string;
   generated: string;
@@ -23,9 +23,9 @@ export function WeeklySummaryCard({ summary: s, isExpanded, onToggle }: WeeklySu
         <div>
           <div className="flex items-center gap-2">
             <Sparkles size={16} className="text-accent-violet" />
-            <h3 className="text-[18px] font-semibold">{s.dateRange}</h3>
+            <h3 className="text-lg font-semibold">{s.dateRange}</h3>
           </div>
-          <span className="text-text-muted text-[11px]">Generated {s.generated}</span>
+          <span className="text-text-muted text-2xs">Generated {s.generated}</span>
         </div>
         <div className="flex gap-2">
           <button className="btn-ghost p-1">
@@ -40,12 +40,12 @@ export function WeeklySummaryCard({ summary: s, isExpanded, onToggle }: WeeklySu
         </div>
       </div>
       <div className="mt-4">
-        <div className="text-text-secondary mb-1.5 text-[12px] font-semibold">
+        <div className="text-text-secondary mb-1.5 text-xs font-semibold">
           Key Accomplishments
         </div>
         <ul className="space-y-1">
           {s.accomplishments.slice(0, isExpanded ? undefined : 3).map(a => (
-            <li key={a} className="text-text-secondary relative pl-3 text-[13px]">
+            <li key={a} className="text-text-secondary relative pl-3 text-sm">
               <span className="absolute left-0">•</span>
               {a}
             </li>
@@ -53,25 +53,25 @@ export function WeeklySummaryCard({ summary: s, isExpanded, onToggle }: WeeklySu
         </ul>
         <div className="mt-3 flex flex-wrap gap-2">
           {s.reposActive.map(r => (
-            <span key={r} className="pill text-[11px]">
+            <span key={r} className="pill text-2xs">
               {r}
             </span>
           ))}
         </div>
-        <div className="text-text-muted mt-3 text-[12px]">
+        <div className="text-text-muted mt-3 text-xs">
           {s.commitsProcessed} commits processed
         </div>
         {isExpanded && (
           <div className="mt-3">
-            <div className="text-text-secondary mb-1 text-[12px] font-semibold">
+            <div className="text-text-secondary mb-1 text-xs font-semibold">
               Notable Changes
             </div>
-            <p className="text-text-secondary text-[13px] leading-[1.6]">{s.notable}</p>
+            <p className="text-text-secondary text-sm leading-relaxed">{s.notable}</p>
           </div>
         )}
         <button
           onClick={() => onToggle(s.id)}
-          className="text-accent-violet btn-ghost mt-2 flex items-center gap-1 text-[12px]"
+          className="text-accent-violet btn-ghost mt-2 flex items-center gap-1 text-xs"
         >
           {isExpanded ? (
             <>

@@ -1,3 +1,7 @@
+import type { MockRow } from "@/lib/types/export";
+
+export type { MockRow };
+
 export const MONTHS = [
   "January",
   "February",
@@ -12,13 +16,6 @@ export const MONTHS = [
   "November",
   "December",
 ];
-
-export interface MockRow {
-  hash: string;
-  repo: string;
-  message: string;
-  date: string;
-}
 
 export const MOCK_ROWS: MockRow[] = [
   { hash: "a3f7b2c", repo: "gitpulse", message: "feat: add glassmorphism theme", date: "2026-04-04" },
