@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Activity, GitBranch } from "lucide-react";
-import { Background } from "@/components/layout/background";
+import { Background } from "@/components/layout/Background";
 import { HeroSection } from "@/components/features/landing/HeroSection";
 import { FeaturesSection } from "@/components/features/landing/FeaturesSection";
 import { StepsSection } from "@/components/features/landing/StepsSection";

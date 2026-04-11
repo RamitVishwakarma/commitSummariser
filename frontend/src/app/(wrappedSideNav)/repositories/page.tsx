@@ -1,4 +1,4 @@
-import { TopBar } from "@/components/layout/top-bar";
+import { TopBar } from "@/components/layout/TopBar";
 import { repos } from "@/lib/mock";
 import { RepositoryList } from "@/components/features/repositories/RepositoryList";
 

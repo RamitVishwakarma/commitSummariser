@@ -32,6 +32,20 @@
   --color-bg-overlay: var(--bg-overlay);
   --color-bg-overlay-strong: var(--bg-overlay-strong);
   --color-tick-muted: var(--tick-muted);
+  --color-border-violet-subtle: var(--border-violet-subtle);
+  --color-border-amber-subtle: var(--border-amber-subtle);
+  --color-border-rose-subtle: var(--border-rose-subtle);
+  --color-border-rose-faint: var(--border-rose-faint);
+  --color-bg-teal-faint: var(--bg-teal-faint);
+  --color-bg-rose-faint: var(--bg-rose-faint);
+  --color-bg-glass-panel: var(--bg-glass-panel);
+  --color-bg-muted-overlay: var(--bg-muted-overlay);
+  --color-bg-teal-glass: var(--bg-teal-glass);
+  --color-bg-blue-glass: var(--bg-blue-glass);
+  --color-bg-rose-glass: var(--bg-rose-glass);
+  --color-bg-faint-overlay: var(--bg-faint-overlay);
+  --color-border-teal-medium: var(--border-teal-medium);
+  --color-bg-deep-strong: var(--bg-deep-strong);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -110,6 +124,20 @@
   --bg-overlay: rgba(10, 18, 20, 0.6);
   --bg-overlay-strong: rgba(10, 18, 20, 0.7);
   --tick-muted: #9898B0;
+  --border-violet-subtle: rgba(139, 92, 246, 0.3);
+  --border-amber-subtle: rgba(245, 158, 11, 0.3);
+  --border-rose-subtle: rgba(244, 63, 94, 0.3);
+  --border-rose-faint: rgba(244, 63, 94, 0.2);
+  --bg-teal-faint: rgba(45, 212, 191, 0.05);
+  --bg-rose-faint: rgba(244, 63, 94, 0.05);
+  --bg-glass-panel: rgba(255, 255, 255, 0.12);
+  --bg-muted-overlay: rgba(255, 255, 255, 0.10);
+  --bg-teal-glass: rgba(45, 212, 191, 0.12);
+  --bg-blue-glass: rgba(56, 189, 248, 0.12);
+  --bg-rose-glass: rgba(244, 63, 94, 0.12);
+  --bg-faint-overlay: rgba(255, 255, 255, 0.02);
+  --border-teal-medium: rgba(45, 212, 191, 0.15);
+  --bg-deep-strong: rgba(10, 18, 20, 0.95);
 
   /* ── shadcn tokens ── */
   --background: oklch(1 0 0);
@@ -321,6 +349,31 @@
 /* Pill border color for hero section */
 .pill-border-teal {
   border-color: rgba(45, 212, 191, 0.3);
+}
+
+/* Sidebar user avatar gradient */
+.sidebar-gradient {
+  background: linear-gradient(135deg, #1a8a7d, #2DD4BF);
+}
+
+/* Hero heading fluid font size */
+.text-hero-heading {
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+}
+
+/* Background component gradients */
+.bg-app-gradient {
+  background: linear-gradient(135deg, #0a1214 0%, #0a1e1e 30%, #0d2628 50%, #081a1c 70%, #0a1214 100%);
+}
+.bg-orb-teal-strong {
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.35) 0%, transparent 70%);
+}
+.bg-orb-teal {
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.3) 0%, transparent 70%);
+}
+.bg-orb-blue {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
 }
 
 @layer base {

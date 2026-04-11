@@ -1,4 +1,4 @@
-import { TopBar } from "@/components/layout/top-bar";
+import { TopBar } from "@/components/layout/TopBar";
 import { allCommits } from "@/lib/mock";
 import { CommitsClient } from "@/components/features/commits/CommitsClient";
 

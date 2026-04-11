@@ -1,4 +1,4 @@
-import { TopBar } from "@/components/layout/top-bar";
+import { TopBar } from "@/components/layout/TopBar";
 import { weeklySummaries, monthlySummaries, yearlySummary } from "@/lib/mock";
 import { SummariesClient } from "@/components/features/summaries/SummariesClient";
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { Background } from "@/components/layout/background";
-import { Sidebar } from "@/components/layout/sidebar";
+import { Background } from "@/components/layout/Background";
+import { Sidebar } from "@/components/layout/Sidebar";
 
 interface WrappedSideNavLayoutProps {
   children: ReactNode;
