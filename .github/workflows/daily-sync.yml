@@ -1,0 +1,29 @@
+name: Daily GitPulse Sync
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # 6:00 AM UTC daily
+  workflow_dispatch:       # Allow manual trigger from Actions UI
+
+jobs:
+  sync:
+    name: Trigger GitPulse Sync
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Wait for Render cold start
+        run: sleep 120
+
+      - name: Trigger sync endpoint
+        run: |
+          response=$(curl \
+            --silent \
+            --show-error \
+            --fail \
+            --max-time 600 \
+            --request POST \
+            --header "X-Sync-Secret: ${{ secrets.SYNC_SECRET }}" \
+            --header "Content-Type: application/json" \
+            "${{ secrets.BACKEND_URL }}/api/sync")
+          echo "Sync response: $response"
